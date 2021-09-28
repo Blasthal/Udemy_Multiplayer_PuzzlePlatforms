@@ -19,6 +19,10 @@ public:
 	AMovingPlatform();
 
 
+protected:
+	virtual void BeginPlay() override;
+
+
 public:
 	virtual void Tick(float DeltaSeconds) override;
 
@@ -26,5 +30,17 @@ public:
 private:
 	// ˆÚ“®‘¬“x
 	UPROPERTY(EditAnywhere)
-	FVector MoveVector = FVector::ForwardVector * 100.0f;
+	float MoveSpeed = 100.0f;
+
+	// –Ú•WˆÊ’u
+	UPROPERTY(EditAnywhere, Meta = (MakeEditWidget = true))
+	FVector TargetLocation = FVector::ZeroVector;
+
+
+private:
+	UPROPERTY()
+	FVector GlobalTargetLocation = FVector::ZeroVector;
+
+	UPROPERTY()
+	FVector GlobalStartLocation = FVector::ZeroVector;
 };
