@@ -1,0 +1,22 @@
+"C:\Program Files\Epic Games\UE_4.23\Engine\Binaries\Win64\UE4Editor.exe"
+
+"S:\Dev\Udemy\Unreal C++ Multiplayer Master Intermediate Game Development\1_Puzzle_Platforms\PuzzlePlatforms\PuzzlePlatforms.uproject"
+
+\Game\ThirdPersonCPP\Maps\ThirdPersonExampleMap
+
+-log
+-game
+-server
+
+192.168.10.104
+
+
+■ コマンドでのクライアント起動確認
+"C:\Program Files\Epic Games\UE_4.23\Engine\Binaries\Win64\UE4Editor.exe" "S:\Dev\Udemy\Unreal C++ Multiplayer Master Intermediate Game Development\1_Puzzle_Platforms\PuzzlePlatforms\PuzzlePlatforms.uproject" -log -game
+
+
+■ サーバー起動
+"C:\Program Files\Epic Games\UE_4.23\Engine\Binaries\Win64\UE4Editor.exe" "S:\Dev\Udemy\Unreal C++ Multiplayer Master Intermediate Game Development\1_Puzzle_Platforms\PuzzlePlatforms\PuzzlePlatforms.uproject" /Game/ThirdPersonCPP/Maps/ThirdPersonExampleMap?listen -log -server
+
+■ クライアント起動＆サーバー接続
+"C:\Program Files\Epic Games\UE_4.23\Engine\Binaries\Win64\UE4Editor.exe" "S:\Dev\Udemy\Unreal C++ Multiplayer Master Intermediate Game Development\1_Puzzle_Platforms\PuzzlePlatforms\PuzzlePlatforms.uproject" 192.168.10.104:7777 -log -game
