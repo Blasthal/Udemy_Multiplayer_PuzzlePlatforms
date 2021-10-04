@@ -74,11 +74,15 @@ void AMovingPlatform::Tick(float DeltaSeconds)
 
 void AMovingPlatform::AddActiveTrigger()
 {
+	UE_LOG(LogTemp, Warning, TEXT("ActiveTriggers=%d"), ActiveTriggers);
+
 	ActiveTriggers += 1;
 }
 
 
 void AMovingPlatform::RemoveActiveTrigger()
 {
+	UE_LOG(LogTemp, Warning, TEXT("ActiveTriggers=%d"), ActiveTriggers);
+
 	ActiveTriggers -= 1;
 }
