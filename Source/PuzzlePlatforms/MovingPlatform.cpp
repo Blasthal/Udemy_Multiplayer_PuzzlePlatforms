@@ -37,31 +37,48 @@ void AMovingPlatform::Tick(float DeltaSeconds)
 	// サーバーでの処理のみ
 	if (HasAuthority())
 	{
-		const FVector GlobalMoveDirection = (GlobalTargetLocation - GlobalStartLocation).GetSafeNormal();
-		const FVector GlobalMoveVector = GlobalMoveDirection * MoveSpeed;
-		const FVector GlobalMovedLocation = GlobalMoveVector * DeltaSeconds + GetActorLocation();
-
-		const FVector GlobalTargetDirectionFromMoved = (GlobalTargetLocation - GlobalMovedLocation).GetSafeNormal();
-
-		// 目標地点へ移動中
-		const bool bIsMoveForwardToTarget = (0.0f < FVector::DotProduct(GlobalMoveDirection, GlobalTargetDirectionFromMoved));
-		if (bIsMoveForwardToTarget)
+		// 有効なトリガーがある場合
+		if (0 < ActiveTriggers)
 		{
-			SetActorLocation(GlobalMovedLocation);
+			const FVector GlobalMoveDirection = (GlobalTargetLocation - GlobalStartLocation).GetSafeNormal();
+			const FVector GlobalMoveVector = GlobalMoveDirection * MoveSpeed;
+			const FVector GlobalMovedLocation = GlobalMoveVector * DeltaSeconds + GetActorLocation();
+
+			const FVector GlobalTargetDirectionFromMoved = (GlobalTargetLocation - GlobalMovedLocation).GetSafeNormal();
+
+			// 目標地点へ移動中
+			const bool bIsMoveForwardToTarget = (0.0f < FVector::DotProduct(GlobalMoveDirection, GlobalTargetDirectionFromMoved));
+			if (bIsMoveForwardToTarget)
+			{
+				SetActorLocation(GlobalMovedLocation);
+			}
+			// 目標地点を通り過ぎた
+			else
+			{
+				SetActorLocation(GlobalTargetLocation);
+
+				const FVector Temp = GlobalStartLocation;
+				GlobalStartLocation = GlobalTargetLocation;
+				GlobalTargetLocation = Temp;
+			}
 		}
-		// 目標地点を通り過ぎた
-		else
-		{
-			SetActorLocation(GlobalTargetLocation);
-
-			const FVector Temp = GlobalStartLocation;
-			GlobalStartLocation = GlobalTargetLocation;
-			GlobalTargetLocation = Temp;
-		}
-
-
-		// デバッグ表示
-		DrawDebugString(GetWorld(), GetActorLocation(), *(GetActorLocation().ToString()), nullptr, FColor::White, 0.0f);
-		//GEngine->AddOnScreenDebugMessage(INDEX_NONE, 0.0f, FColor::White, *(GetActorLocation().ToString()));
 	}
+
+	// デバッグ表示
+	FString DebugText;
+	DebugText += GetActorLocation().ToString() + TEXT("\n");
+	DebugText += FString::FromInt(ActiveTriggers);
+	DrawDebugString(GetWorld(), GetActorLocation(), *(DebugText), nullptr, FColor::White, 0.0f);
+}
+
+
+void AMovingPlatform::AddActiveTrigger()
+{
+	ActiveTriggers += 1;
+}
+
+
+void AMovingPlatform::RemoveActiveTrigger()
+{
+	ActiveTriggers -= 1;
 }

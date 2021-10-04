@@ -37,10 +37,18 @@ private:
 	FVector TargetLocation = FVector::ZeroVector;
 
 
+public:
+	void AddActiveTrigger();
+	void RemoveActiveTrigger();
+
+
 private:
 	UPROPERTY()
 	FVector GlobalTargetLocation = FVector::ZeroVector;
 
 	UPROPERTY()
 	FVector GlobalStartLocation = FVector::ZeroVector;
+
+	UPROPERTY(EditAnywhere)
+	int32 ActiveTriggers = 1;
 };
